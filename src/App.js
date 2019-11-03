@@ -29,7 +29,7 @@ class App extends React.Component {
             let sunset = data.sys.sunset;
             let date = new Date();
             date.setTime(sunset);
-            let sunset_date = date.getHours() + ":"+ date.getMinutes() + ":" + date.getSeconds();
+            let sunset_date = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
 
             this.setState({
@@ -38,24 +38,46 @@ class App extends React.Component {
                 country: data.sys.country,
                 pressure: data.main.pressure,
                 sunset: sunset_date,
-                error: "",
+                error: undefined,
             });
+        } else {
+
+            this.setState({
+                temp: undefined,
+                city: undefined,
+                country: undefined,
+                pressure: undefined,
+                sunset: undefined,
+                error: alert('Введите Ваш город'),
+            });
+
         }
     };
 
     render() {
         return (
-            <div>
-                <Info/>
-                <Form weatherMethod={this.gettingWeather}/>
-                <Weather
-                    temp={this.state.temp}
-                    city={this.state.city}
-                    country={this.state.country}
-                    pressure={this.state.pressure}
-                    sunset={this.state.sunset}
-                    error={this.state.error}
-                />
+            <div className="wrapper">
+                <div className="main">
+                <div className="container">
+                    <div className="row">
+                        <div className="col-sm-5 info">
+                            <Info/>
+                        </div>
+                        <div className="col-sm-7 form">
+                            <Form weatherMethod={this.gettingWeather}/>
+                            <Weather
+                                temp={this.state.temp}
+                                city={this.state.city}
+                                country={this.state.country}
+                                pressure={this.state.pressure}
+                                sunset={this.state.sunset}
+                                error={this.state.error}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                </div>
             </div>
         );
     }
